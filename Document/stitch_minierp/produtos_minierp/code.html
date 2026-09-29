@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Produtos do Estoque - MiniERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#924700",
+                      "primary": "#0058be",
+                      "background": "#f7f9ff",
+                      "on-surface-variant": "#424754",
+                      "surface-variant": "#e0e3e8",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#fefcff",
+                      "tertiary-container": "#b75b00",
+                      "inverse-primary": "#adc6ff",
+                      "on-background": "#181c20",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#005ac2",
+                      "outline": "#727785",
+                      "tertiary-fixed": "#ffdcc6",
+                      "on-secondary-fixed": "#0b1c30",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface": "#f7f9ff",
+                      "tertiary-fixed-dim": "#ffb786",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#fffbff",
+                      "secondary-container": "#d0e1fb",
+                      "surface-container-low": "#f1f4f9",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e5e8ee",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "secondary": "#505f76",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#d7dadf",
+                      "surface-container-highest": "#e0e3e8",
+                      "inverse-on-surface": "#eef1f6",
+                      "on-tertiary-fixed": "#311400",
+                      "outline-variant": "#c2c6d6",
+                      "on-tertiary-fixed-variant": "#723600",
+                      "on-surface": "#181c20",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#001a42",
+                      "primary-fixed-dim": "#adc6ff",
+                      "inverse-surface": "#2d3135",
+                      "on-secondary-container": "#54647a",
+                      "surface-bright": "#f7f9ff",
+                      "on-primary-fixed-variant": "#004395",
+                      "primary-container": "#2170e4",
+                      "surface-container": "#ebeef3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "base": "4px",
+                      "margin-desktop": "32px",
+                      "sm": "8px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "margin-mobile": "16px",
+                      "md": "16px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "display": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "data-tabular": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "display": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "data-tabular": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        [data-weight="fill"] > .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 right-0 w-full md:w-[calc(100%-240px)] h-16 border-b border-outline-variant bg-surface flex items-center justify-between px-md z-20 md:ml-[240px] shadow-sm">
+<div class="flex items-center gap-4">
+<button aria-label="Menu" class="md:hidden p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-sm text-headline-sm font-bold text-primary md:hidden">MiniERP</span>
+<div class="hidden md:flex relative w-64">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar no sistema..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors duration-150 relative group" title="Notificações">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<button class="flex items-center gap-2 p-1 hover:bg-surface-container-low rounded-lg transition-colors duration-150 pr-2 group">
+<img alt="Avatar do Usuário" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small, circular avatar portrait of a modern professional in a minimalist setting. The lighting is soft and natural, emphasizing a calm and organized persona. Colors are neutral and muted to fit a high-end UI design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMsvJ-aHjSUsPxd9FMBN3s29qZ8omZ8D9Z7TH1wflh5qTXZUxD3XLJrey-LPJgQwpfm5TIFocFlefyIsVmq42K85HebMxZI6HDDg9BLBvlHCeD9jBMSo51o2WNQqm5Jj7R7gZ5mIULULZOaGk5vfCKfBBPXNA2gtiVfx1QYN_Kuy1ktRKJy1l4PZtbVLdZud4eGl5ioiNWbiuuMnHKicWfstuj1H3Y0pHKloztkO1vb56iwB732jnHYQ"/>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors hidden sm:block">Usuário</span>
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">arrow_drop_down</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-[240px] border-r border-outline-variant bg-surface flex-col z-30 shadow-sm">
+<div class="h-16 flex items-center px-lg border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold shadow-sm">M</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary leading-tight">MiniERP</h1>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Gestão Doméstica</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-md px-sm flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">dashboard</span>
+<span class="group-hover:text-on-surface">Início</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">payments</span>
+<span class="group-hover:text-on-surface">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-label-sm text-label-sm font-bold shadow-sm relative overflow-hidden group border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined" data-weight="fill">inventory_2</span>
+<span>Estoque</span>
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">contacts</span>
+<span class="group-hover:text-on-surface">Contatos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">shopping_cart</span>
+<span class="group-hover:text-on-surface">Compras</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">pets</span>
+<span class="group-hover:text-on-surface">Pets</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">calendar_today</span>
+<span class="group-hover:text-on-surface">Agenda</span>
+</a>
+</div>
+<div class="p-sm border-t border-outline-variant flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">settings</span>
+<span class="group-hover:text-on-surface">Configurações</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">help</span>
+<span class="group-hover:text-on-surface">Ajuda</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 font-body-md text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-on-surface">account_circle</span>
+<span class="group-hover:text-on-surface">Perfil</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 mt-16 md:ml-[240px] p-margin-mobile md:p-margin-desktop w-full max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-lg">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-on-surface-variant font-label-sm text-label-sm mb-2">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary transition-colors" href="#">Estoque</a></li>
+<li><span class="material-symbols-outlined text-[16px]">chevron_right</span></li>
+<li aria-current="page" class="text-on-surface font-semibold">Produtos</li>
+</ol>
+</nav>
+<h2 class="font-display text-display text-on-surface">Produtos do Estoque</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Gerencie os itens da sua casa.</p>
+</div>
+<button class="h-[44px] inline-flex items-center justify-center gap-2 px-6 bg-primary text-on-primary rounded font-label-sm text-label-sm uppercase hover:bg-surface-tint transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Novo Produto
+            </button>
+</div>
+<!-- Filters & Search Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md mb-lg shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+<div class="flex flex-col lg:flex-row gap-4">
+<!-- Search -->
+<div class="flex-1 min-w-[250px]">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-surface border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar produto..." type="text"/>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap lg:flex-nowrap gap-4">
+<div class="relative min-w-[160px] flex-1 lg:flex-none">
+<select class="w-full appearance-none bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
+<option value="">Categoria: Todas</option>
+<option value="alimentos">Alimentos</option>
+<option value="medicamentos">Medicamentos</option>
+<option value="limpeza">Limpeza</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</span>
+</div>
+<div class="relative min-w-[160px] flex-1 lg:flex-none">
+<select class="w-full appearance-none bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
+<option value="">Local: Todos</option>
+<option value="despensa">Despensa</option>
+<option value="armario">Armário</option>
+<option value="area-servico">Área de Serviço</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</span>
+</div>
+<div class="relative min-w-[160px] flex-1 lg:flex-none">
+<select class="w-full appearance-none bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
+<option value="">Situação: Todas</option>
+<option value="normal">Normal</option>
+<option value="baixo">Baixo Estoque</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</span>
+</div>
+<button class="inline-flex items-center justify-center p-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface border border-outline-variant rounded-lg transition-colors" title="Limpar Filtros">
+<span class="material-symbols-outlined text-[20px]">filter_alt_off</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+<div class="overflow-x-auto">
+<table class="w-full text-left whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Produto</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Categoria</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Qtd</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Unidade</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Local</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Validade</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right" title="Estoque Mínimo">Mín.</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Situação</th>
+<th class="px-md py-3 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-data-tabular text-data-tabular">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm font-semibold text-on-surface">Arroz</td>
+<td class="px-md py-sm text-on-surface-variant">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-[11px] font-medium border border-outline-variant/50">
+                                    Alimentos
+                                </span>
+</td>
+<td class="px-md py-sm text-right font-medium">3</td>
+<td class="px-md py-sm text-on-surface-variant">Pacotes</td>
+<td class="px-md py-sm text-on-surface-variant">Despensa</td>
+<td class="px-md py-sm text-on-surface-variant">—</td>
+<td class="px-md py-sm text-right text-on-surface-variant">2</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E6F4EA] text-[#137333] text-[12px] font-medium border border-[#CEEAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#137333]"></span>
+                                    Normal
+                                </span>
+</td>
+<td class="px-md py-sm text-right">
+<button class="text-outline hover:text-on-surface transition-colors opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm font-semibold text-on-surface">Dipirona</td>
+<td class="px-md py-sm text-on-surface-variant">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-[11px] font-medium border border-outline-variant/50">
+                                    Medicamentos
+                                </span>
+</td>
+<td class="px-md py-sm text-right font-medium text-tertiary-container">1</td>
+<td class="px-md py-sm text-on-surface-variant">Caixa</td>
+<td class="px-md py-sm text-on-surface-variant">Armário</td>
+<td class="px-md py-sm text-on-surface-variant">10/2027</td>
+<td class="px-md py-sm text-right text-on-surface-variant">1</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FEF7E0] text-[#B06000] text-[12px] font-medium border border-[#FDE293]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#B06000]"></span>
+                                    Baixo estoque
+                                </span>
+</td>
+<td class="px-md py-sm text-right">
+<button class="text-outline hover:text-on-surface transition-colors opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-sm font-semibold text-on-surface">Detergente</td>
+<td class="px-md py-sm text-on-surface-variant">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-[11px] font-medium border border-outline-variant/50">
+                                    Limpeza
+                                </span>
+</td>
+<td class="px-md py-sm text-right font-medium">4</td>
+<td class="px-md py-sm text-on-surface-variant">Unidades</td>
+<td class="px-md py-sm text-on-surface-variant">Área de serviço</td>
+<td class="px-md py-sm text-on-surface-variant">—</td>
+<td class="px-md py-sm text-right text-on-surface-variant">2</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E6F4EA] text-[#137333] text-[12px] font-medium border border-[#CEEAD6]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#137333]"></span>
+                                    Normal
+                                </span>
+</td>
+<td class="px-md py-sm text-right">
+<button class="text-outline hover:text-on-surface transition-colors opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-md py-3 border-t border-outline-variant bg-surface flex items-center justify-between">
+<div class="font-data-tabular text-data-tabular text-on-surface-variant">
+                    Mostrando 1 a 3 de 3 resultados
+                </div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-outline hover:bg-surface-container-low hover:text-on-surface transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-1 rounded text-outline hover:bg-surface-container-low hover:text-on-surface transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant z-20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] pb-safe">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-sm text-[10px]">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-primary relative" href="#">
+<div class="absolute top-0 w-8 h-1 bg-primary rounded-b-full"></div>
+<span class="material-symbols-outlined mb-1" data-weight="fill">inventory_2</span>
+<span class="font-label-sm text-[10px] font-bold">Estoque</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">shopping_cart</span>
+<span class="font-label-sm text-[10px]">Compras</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">calendar_today</span>
+<span class="font-label-sm text-[10px]">Agenda</span>
+</a>
+</div>
+</nav>
+<!-- Mobile FAB for New Product (only visible on small screens when top button might scroll away) -->
+<button class="md:hidden fixed bottom-20 right-4 w-14 h-14 bg-primary text-on-primary rounded-xl shadow-lg flex items-center justify-center hover:bg-surface-tint hover:-translate-y-1 transition-all z-20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+</body></html>
